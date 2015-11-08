@@ -1,0 +1,29 @@
+//======================================================================
+// ASIX AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.10 Driver Installer
+// Revision History
+//
+// This document describes the major changes, additions and bug fixes made 
+// to the installer between released versions. 
+//======================================================================
+
+Version 2.4.0 (2014-12-15)
+1. Updated AX88772C/772B/772A/760/772 Macintosh 10.9 to 10.10 driver v1.4.0
+2. Updated AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.8 driver v4.4.0
+
+Version 2.3.0 (2014-07-25)
+1. Updated AX88772C/772B/772A/760/772 Macintosh 10.9 to 10.10 driver v1.3.0
+2. Updated AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.8 driver v4.3.0
+
+Version 2.2.0 (2014-06-20)
+1. Updated AX88772C/772B/772A/760/772 Macintosh 10.9 to 10.10 driver v1.2.0
+2. Updated AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.8 driver v4.2.0
+
+Version 2.1.0 (2014-04-28)
+1. Updated AX88772C/772B/772A/760/772 Macintosh 10.9 driver v1.1.0
+2. Updated AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.8 driver v4.1.0
+
+Version 2.0.0 (2014-02-19)
+1. This installer includes the following AX88772C/772B/772A/760/772 Macintosh drivers.
+   AX88772C/772B/772A/760/772 Macintosh 10.9 driver v1.0.0
+   AX88772C/772B/772A/760/772 Macintosh 10.5 to 10.8 driver v4.0.0
+2. Updated package uninstaller v1.3.0.

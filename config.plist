@@ -32,19 +32,24 @@
 	</dict>
 	<key>Boot</key>
 	<dict>
+        <key>Arguments</key>
+        <string>dart=0 nv_disable=1 kext-dev-mode=1</string>
 		<key>Debug</key>
 		<false/>
-		<key>DefaultVolume</key>
-		<string>Macintosh HD</string>
 		<key>Secure</key>
 		<false/>
 		<key>Timeout</key>
-		<integer>3</integer>
+		<integer>-1</integer>
 		<key>XMPDetection</key>
 		<false/>
 	</dict>
 	<key>Devices</key>
 	<dict>
+		<key>FakeID</key>
+		<dict>
+			<key>IntelGFX</key>
+			<string>0x04128086</string>
+		</dict>
 		<key>USB</key>
 		<dict>
 			<key>FixOwnership</key>
@@ -111,6 +116,16 @@
 		<true/>
 		<key>KextsToPatch</key>
 		<array>
+			<dict>
+				<key>Comment</key>
+				<string>Enable 9MB cursor bytes, 0x0a260006</string>
+				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Find</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
+				<key>Replace</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
+			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>10.11-BCM94352-5GHz-US-FCC-dv</string>
@@ -233,7 +248,7 @@
 		<key>ProductName</key>
 		<string>MacBookAir6,2</string>
 		<key>SerialNumber</key>
-		<string>ENTER YOUR OWN SERIAL HERE</string>
+		<string>C02LSLIPFLCG</string>
 		<key>Trust</key>
 		<true/>
 		<key>Version</key>
