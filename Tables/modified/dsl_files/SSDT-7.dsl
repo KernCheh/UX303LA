@@ -5,7 +5,7 @@
  * 
  * Disassembling to non-symbolic legacy ASL operators
  *
- * Disassembly of SSDT7.aml, Sun Nov  8 12:19:36 2015
+ * Disassembly of SSDT-7.aml, Sun Nov  8 12:55:12 2015
  *
  * Original Table Header:
  *     Signature        "SSDT"
@@ -18,7 +18,7 @@
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20091112 (537465106)
  */
-DefinitionBlock ("SSDT7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
+DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
 {
     /*
      * iASL Warning: There were 12 external control methods found during

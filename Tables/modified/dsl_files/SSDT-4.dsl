@@ -5,7 +5,7 @@
  * 
  * Disassembling to non-symbolic legacy ASL operators
  *
- * Disassembly of SSDT4.aml, Sun Nov  8 12:19:36 2015
+ * Disassembly of SSDT-4.aml, Sun Nov  8 12:55:12 2015
  *
  * Original Table Header:
  *     Signature        "SSDT"
@@ -18,7 +18,7 @@
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20120711 (538052369)
  */
-DefinitionBlock ("SSDT4.aml", "SSDT", 1, "PmRef", "ApTst", 0x00003000)
+DefinitionBlock ("SSDT-4.aml", "SSDT", 1, "PmRef", "ApTst", 0x00003000)
 {
 
     /*

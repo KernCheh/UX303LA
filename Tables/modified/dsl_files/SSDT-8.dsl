@@ -5,7 +5,7 @@
  * 
  * Disassembling to non-symbolic legacy ASL operators
  *
- * Disassembly of SSDT8.aml, Sun Nov  8 12:19:36 2015
+ * Disassembly of SSDT-8.aml, Sun Nov  8 12:55:12 2015
  *
  * Original Table Header:
  *     Signature        "SSDT"
@@ -18,7 +18,7 @@
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20120711 (538052369)
  */
-DefinitionBlock ("SSDT8.aml", "SSDT", 1, "Intel_", "IsctTabl", 0x00001000)
+DefinitionBlock ("SSDT-8.aml", "SSDT", 1, "Intel_", "IsctTabl", 0x00001000)
 {
 
     /*
