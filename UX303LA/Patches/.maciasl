@@ -1,0 +1,6 @@
+[Asus] LID	ZenBooksLidSleepandScreenBackLightPatch.txt
+[Asus] KeyboardBacklight_16Levels_Patch_(Haswell/Ivy)	KeyboardBacklight.txt
+[Asus] ALS_Patch	ALSPatch(Haswell).txt
+[Asus] BrightnessKeys		fnKeyPatch.txt
+[DTGP] DTGP		DTGP.txt
+[WiFi] BCM94352 	WiFI4352.txt
