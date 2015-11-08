@@ -29,7 +29,7 @@ DefinitionBlock ("SSDT-6.aml", "SSDT", 1, "SataRe", "SataTabl", 0x00001000)
     External (_SB_.PCI0.LPCB.H_EC.ECWT, MethodObj)    // 2 Arguments
     External (_SB_.PCI0.PEG0.PEGP.SGPO, MethodObj)    // 2 Arguments
 
-    External (_SB_.PCI0.SAT0, DeviceObj)
+    External (_SB_.PCI0.SATA, DeviceObj)
 
     Scope (\)
     {
@@ -63,7 +63,7 @@ DefinitionBlock ("SSDT-6.aml", "SSDT", 1, "SataRe", "SataTabl", 0x00001000)
         }
     }
 
-    Scope (\_SB.PCI0.SAT0)
+    Scope (\_SB.PCI0.SATA)
     {
         Name (REGF, One)
         Method (_REG, 2, NotSerialized)  // _REG: Region Availability

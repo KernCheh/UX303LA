@@ -47,10 +47,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
      * External declarations that were imported from
      * the reference file [refs.txt]
      */
-    External (_SB_.PCI0.LPCB.H_EC.ECRD, MethodObj)    // 1 Arguments
-    External (_SB_.PCI0.LPCB.H_EC.ECWT, MethodObj)    // 2 Arguments
-    External (_SB_.PCI0.PEG0.PEGP.SGPO, MethodObj)    // 2 Arguments
-
+   
     External (_SB_.BRTI, FieldUnitObj)
     External (_SB_.CSTE, FieldUnitObj)
     External (_SB_.LBTN, FieldUnitObj)
@@ -78,6 +75,11 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
     External (PNHM, FieldUnitObj)
     External (S0ID, FieldUnitObj)
     External (SCIS, FieldUnitObj)
+    
+    External (_SB_.PCI0.LPCB.H_EC.ECRD, MethodObj)    // 1 Arguments
+    External (_SB_.PCI0.LPCB.H_EC.ECWT, MethodObj)    // 2 Arguments
+    External (_SB_.PCI0.PEG0.PEGP.SGPO, MethodObj)    // 2 Arguments
+
 
     OperationRegion (SANV, SystemMemory, 0xDAAFEE18, 0x016D)
     Field (SANV, AnyAcc, Lock, Preserve)
@@ -202,7 +204,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
     {
         Name (LTRS, Zero)
         Name (OBFS, Zero)
-        Device (B0D3)
+        Device (HDAU)
         {
             Name (_ADR, 0x00030000)  // _ADR: Address
             Name (BARA, 0x80000000)
@@ -430,9 +432,18 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                     }
                 }
             }
+            Method (_DSM, 4, NotSerialized)
+            {
+                If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Return (Package()
+                {
+                    "layout-id", Buffer() { 12, 0x00, 0x00, 0x00 },
+                    "hda-gfx", Buffer() { "onboard-1" },
+                })
+            }
         }
 
-        Device (GFX0)
+        Device (IGPU)
         {
             Name (_ADR, 0x00020000)  // _ADR: Address
             OperationRegion (VSID, PCI_Config, Zero, 0x04)
@@ -1830,7 +1841,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                     Subtract (0x0A, Local0, LBTN)
                     If (BRNC)
                     {
-                        \_SB.PCI0.GFX0.AINT (One, Arg0)
+                        \_SB.PCI0.IGPU.AINT (One, Arg0)
                     }
                     Else
                     {
@@ -2510,12 +2521,12 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                         If (LEqual (PARM, One))
                         {
                             Or (\_SB.PCI0.AUDE, 0x20, \_SB.PCI0.AUDE)
-                            \_SB.PCI0.B0D3.ARST ()
-                            \_SB.PCI0.B0D3.ABWA (One)
-                            \_SB.PCI0.B0D3.ASTR ()
-                            \_SB.PCI0.B0D3.AINI ()
-                            \_SB.PCI0.B0D3.CXDC ()
-                            \_SB.PCI0.B0D3.ABWA (Zero)
+                            \_SB.PCI0.HDAU.ARST ()
+                            \_SB.PCI0.HDAU.ABWA (One)
+                            \_SB.PCI0.HDAU.ASTR ()
+                            \_SB.PCI0.HDAU.AINI ()
+                            \_SB.PCI0.HDAU.CXDC ()
+                            \_SB.PCI0.HDAU.ABWA (Zero)
                             Notify (\_SB.PCI0, Zero)
                         }
 
@@ -2583,7 +2594,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                     }
                     Else
                     {
-                        Notify (\_SB.PCI0.GFX0, Arg1)
+                        Notify (\_SB.PCI0.IGPU, Arg1)
                     }
                 }
 
@@ -2593,7 +2604,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                 }
                 Else
                 {
-                    Notify (\_SB.PCI0.GFX0, 0x80)
+                    Notify (\_SB.PCI0.IGPU, 0x80)
                 }
 
                 Return (Zero)
@@ -2810,7 +2821,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                         Store (One, GSES)
                     }
 
-                    Store (One, \_SB.PCI0.GFX0.CLID)
+                    Store (One, \_SB.PCI0.IGPU.CLID)
                 }
             }
 
@@ -3680,12 +3691,12 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                     }
 
                     ISMI (0x94)
-                    Notify (\_SB.PCI0.GFX0, 0x81)
+                    Notify (\_SB.PCI0.IGPU, 0x81)
                 }
                 Else
                 {
-                    Store (One, \_SB.PCI0.GFX0.CEVT)
-                    Store (0x03, \_SB.PCI0.GFX0.CSTS)
+                    Store (One, \_SB.PCI0.IGPU.CEVT)
+                    Store (0x03, \_SB.PCI0.IGPU.CSTS)
                     If (LNotEqual (\_SB.OCAD, \_SB.OPAD))
                     {
                         Store (\_SB.OCAD, \_SB.OPAD)
@@ -3695,7 +3706,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                         }
                         Else
                         {
-                            Notify (\_SB.PCI0.GFX0, Zero)
+                            Notify (\_SB.PCI0.IGPU, Zero)
                         }
 
                         Sleep (0x03E8)
@@ -3703,7 +3714,7 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
 
                     Store (AF2D (Arg0), \_SB.NSTE)
                     WNDD (\_SB.NSTE)
-                    Notify (\_SB.PCI0.GFX0, 0x80)
+                    Notify (\_SB.PCI0.IGPU, 0x80)
                 }
 
                 Return (Zero)
@@ -3724,6 +3735,154 @@ DefinitionBlock ("SSDT-7.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                 }
 
                 Return (D2AF (\_SB.CSTE))
+            }
+            Method (_DSM, 4, NotSerialized)
+            {
+                If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Return (Package()
+                {
+                    "hda-gfx", Buffer() { "onboard-1" },
+                })
+            }
+            OperationRegion (RMPC, PCI_Config, 0x10, 4)
+            Field (RMPC, AnyAcc, NoLock, Preserve)
+            {
+                BAR1,32,
+            }
+            Device (PNLF)
+            {
+                // normal PNLF declares (note some of this probably not necessary)
+                Name (_ADR, Zero)
+                Name (_HID, EisaId ("APP0002"))
+                Name (_CID, "backlight")
+                Name (_UID, 15)
+                Name (_STA, 0x0B)
+                //define hardware register access for brightness
+                // lower nibble of BAR1 is status bits and not part of the address
+                OperationRegion (BRIT, SystemMemory, And(^BAR1, Not(0xF)), 0xe1184)
+                Field (BRIT, AnyAcc, Lock, Preserve)
+                {
+                    Offset(0x48250),
+                    LEV2, 32,
+                    LEVL, 32,
+                    Offset(0x70040),
+                    P0BL, 32,
+                    Offset(0xc8250),
+                    LEVW, 32,
+                    LEVX, 32,
+                    Offset(0xe1180),
+                    PCHL, 32,
+                }
+                // LMAX: use 0xad9/0x56c/0x5db to force OS X value
+                //       or use any arbitrary value
+                //       or use 0 to capture BIOS setting
+                Name (LMAX, 0xad9)
+                // KMAX: defines the unscaled range in the _BCL table below
+                Name (KMAX, 0xad9)
+                // _INI deals with differences between native setting and desired
+                Method (_INI, 0, NotSerialized)
+                {
+                    // This 0xC value comes from looking what OS X initializes this
+                    // register to after display sleep (using ACPIDebug/ACPIPoller)
+                    Store(0xC0000000, LEVW)
+                    // determine LMAX to use
+                    If (LNot(LMAX)) { Store(ShiftRight(LEVX,16), LMAX) }
+                    If (LNot(LMAX)) { Store(KMAX, LMAX) }
+                    If (LNotEqual(LMAX, KMAX))
+                    {
+                        // Scale all the values in _BCL to the PWM max in use
+                        Store(0, Local0)
+                        While (LLess(Local0, SizeOf(_BCL)))
+                        {
+                            Store(DerefOf(Index(_BCL,Local0)), Local1)
+                            Divide(Multiply(Local1,LMAX), KMAX,, Local1)
+                            Store(Local1, Index(_BCL,Local0))
+                            Increment(Local0)
+                        }
+                        // Also scale XRGL and XRGH values
+                        Divide(Multiply(XRGL,LMAX), KMAX,, XRGL)
+                        Divide(Multiply(XRGH,LMAX), KMAX,, XRGH)
+                    }
+                    // adjust values to desired LMAX
+                    Store(ShiftRight(LEVX,16), Local1)
+                    If (LNotEqual(Local1, LMAX))
+                    {
+                        Store(And(LEVX,0xFFFF), Local0)
+                        If (LOr(LNot(Local0),LNot(Local1))) { Store(LMAX, Local0) Store(LMAX, Local1) }
+                        Divide(Multiply(Local0,LMAX), Local1,, Local0)
+                        //REVIEW: wait for vblank before setting new PWM config
+                        //Store(P0BL, Local7)
+                        //While (LEqual (P0BL, Local7)) {}
+                        Store(Or(Local0,ShiftLeft(LMAX,16)), LEVX)
+                    }
+                }
+                // _BCM/_BQC: set/get for brightness level
+                Method (_BCM, 1, NotSerialized)
+                {
+                    // store new backlight level
+                    Store(Match(_BCL, MGE, Arg0, MTR, 0, 2), Local0)
+                    If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }
+                    Store(Or(DerefOf(Index(_BCL,Local0)),ShiftLeft(LMAX,16)), LEVX)
+                }
+                Method (_BQC, 0, NotSerialized)
+                {
+                    Store(Match(_BCL, MGE, And(LEVX, 0xFFFF), MTR, 0, 2), Local0)
+                    If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }
+                    Return(DerefOf(Index(_BCL, Local0)))
+                }
+                Method (_DOS, 1, NotSerialized)
+                {
+                    // Note: Some systems have this defined in DSDT, so uncomment
+                    // the next line if that is the case.
+                    //External(^^_DOS, MethodObj)
+                    ^^_DOS(Arg0)
+                }
+                // extended _BCM/_BQC for setting "in between" levels
+                Method (XBCM, 1, NotSerialized)
+                {
+                    // store new backlight level
+                    If (LGreater(Arg0, XRGH)) { Store(XRGH, Arg0) }
+                    If (LAnd(Arg0, LLess(Arg0, XRGL))) { Store(XRGL, Arg0) }
+                    Store(Or(Arg0,ShiftLeft(LMAX,16)), LEVX)
+                }
+                Method (XBQC, 0, NotSerialized)
+                {
+                    Store(And(LEVX,0xFFFF), Local0)
+                    If (LGreater(Local0, XRGH)) { Store(XRGH, Local0) }
+                    If (LAnd(Local0, LLess(Local0, XRGL))) { Store(XRGL, Local0) }
+                    Return(Local0)
+                }
+                // Set XOPT bit 0 to disable smooth transitions
+                // Set XOPT bit 1 to wait for native BacklightHandler
+                // Set XOPT bit 2 to force use of native BacklightHandler
+                Name (XOPT, 0x02)
+                // XRGL/XRGH: defines the valid range
+                Name (XRGL, 25)
+                Name (XRGH, 2777)
+                // _BCL: returns list of valid brightness levels
+                // first two entries describe ac/battery power levels
+                Name (_BCL, Package()
+                {
+                    2777,
+                    748,
+                    0,
+                    35, 39, 44, 50,
+                    58, 67, 77, 88,
+                    101, 115, 130, 147,
+                    165, 184, 204, 226,
+                    249, 273, 299, 326,
+                    354, 383, 414, 446,
+                    479, 514, 549, 587,
+                    625, 665, 706, 748,
+                    791, 836, 882, 930,
+                    978, 1028, 1079, 1132,
+                    1186, 1241, 1297, 1355,
+                    1414, 1474, 1535, 1598,
+                    1662, 1728, 1794, 1862,
+                    1931, 2002, 2074, 2147,
+                    2221, 2296, 2373, 2452,
+                    2531, 2612, 2694, 2777,
+                })
             }
         }
     }

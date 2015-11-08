@@ -25,9 +25,6 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
      * External declarations that were imported from
      * the reference file [refs.txt]
      */
-    External (_SB_.PCI0.LPCB.H_EC.ECRD, MethodObj)    // 1 Arguments
-    External (_SB_.PCI0.LPCB.H_EC.ECWT, MethodObj)    // 2 Arguments
-    External (_SB_.PCI0.PEG0.PEGP.SGPO, MethodObj)    // 2 Arguments
 
     External (_PR_.AAC0, FieldUnitObj)
     External (_PR_.ACRT, FieldUnitObj)
@@ -68,10 +65,10 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
     External (_SB_.PCCD, UnknownObj)
     External (_SB_.PCI0, DeviceObj)
     External (_SB_.PCI0.B0D4, DeviceObj)
-    External (_SB_.PCI0.GFX0.LCDD._BCL, MethodObj)    // 0 Arguments
-    External (_SB_.PCI0.GFX0.LCDD._BCM, MethodObj)    // 1 Arguments
-    External (_SB_.PCI0.GFX0.LCDD._BQC, MethodObj)    // 0 Arguments
-    External (_SB_.PCI0.GFX0.LCDD._DCS, MethodObj)    // 0 Arguments
+    External (_SB_.PCI0.IGPU.LCDD._BCL, MethodObj)    // 0 Arguments
+    External (_SB_.PCI0.IGPU.LCDD._BCM, MethodObj)    // 1 Arguments
+    External (_SB_.PCI0.IGPU.LCDD._BQC, MethodObj)    // 0 Arguments
+    External (_SB_.PCI0.IGPU.LCDD._DCS, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.EC0_, DeviceObj)
     External (_SB_.PCI0.LPCB.EC0_.RRAM, MethodObj)    // 1 Arguments
     External (_SB_.PCI0.LPCB.EC0_.TH1L, FieldUnitObj)
@@ -103,6 +100,10 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
     External (TCNT, FieldUnitObj)
     External (TGFG, FieldUnitObj)
     External (TSOD, FieldUnitObj)
+    
+    External (_SB_.PCI0.LPCB.H_EC.ECRD, MethodObj)    // 1 Arguments
+    External (_SB_.PCI0.LPCB.H_EC.ECWT, MethodObj)    // 2 Arguments
+    External (_SB_.PCI0.PEG0.PEGP.SGPO, MethodObj)    // 2 Arguments
 
     Scope (\_SB)
     {
@@ -412,7 +413,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             Method (PDDC, 0, Serialized)
             {
-                Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+                Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
                 Name (TMPD, Package (0x09)
                 {
                     Package (0x04)
@@ -527,8 +528,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                 {
                     While (One)
                     {
-                        Store (ToInteger (\_PR.CBMI), _T_0)
-                        If (LEqual (_T_0, Zero))
+                        Store (ToInteger (\_PR.CBMI), T_0)
+                        If (LEqual (T_0, Zero))
                         {
                             If (LAnd (LGreaterEqual (\_PR.CLVL, One), LLessEqual (\_PR.CLVL, 0x03)))
                             {
@@ -538,7 +539,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, One))
+                            If (LEqual (T_0, One))
                             {
                                 If (LOr (LEqual (\_PR.CLVL, 0x02), LEqual (\_PR.CLVL, 0x03)))
                                 {
@@ -548,7 +549,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                             }
                             Else
                             {
-                                If (LEqual (_T_0, 0x02))
+                                If (LEqual (T_0, 0x02))
                                 {
                                     If (LEqual (\_PR.CLVL, 0x03))
                                     {
@@ -575,7 +576,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             Method (PDAC, 0, Serialized)
             {
-                Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+                Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
                 Name (TMPD, Package (0x08)
                 {
                     Package (0x04)
@@ -678,8 +679,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                 {
                     While (One)
                     {
-                        Store (ToInteger (\_PR.CBMI), _T_0)
-                        If (LEqual (_T_0, Zero))
+                        Store (ToInteger (\_PR.CBMI), T_0)
+                        If (LEqual (T_0, Zero))
                         {
                             If (LAnd (LGreaterEqual (\_PR.CLVL, One), LLessEqual (\_PR.CLVL, 0x03)))
                             {
@@ -689,7 +690,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, One))
+                            If (LEqual (T_0, One))
                             {
                                 If (LOr (LEqual (\_PR.CLVL, 0x02), LEqual (\_PR.CLVL, 0x03)))
                                 {
@@ -699,7 +700,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                             }
                             Else
                             {
-                                If (LEqual (_T_0, 0x02))
+                                If (LEqual (T_0, 0x02))
                                 {
                                     If (LEqual (\_PR.CLVL, 0x03))
                                     {
@@ -795,43 +796,43 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
         Name (XPCC, Zero)
         Method (PPCC, 0, Serialized)
         {
-            Name (_T_6, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_5, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_4, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_3, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_2, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_6, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_5, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_4, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_3, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_2, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_1, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             If (LAnd (LEqual (XPCC, Zero), CondRefOf (\_PR.CBMI)))
             {
                 Store (\_SB.PCI0.LPCB.EC0.RRAM (0x01BF), Local0)
                 While (One)
                 {
-                    Store (Local0, _T_0)
-                    If (LEqual (_T_0, Zero))
+                    Store (Local0, T_0)
+                    If (LEqual (T_0, Zero))
                     {
                         Store (Zero, \_PR.CBMI)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, One))
+                        If (LEqual (T_0, One))
                         {
                             While (One)
                             {
-                                Store (\_PR.CLVL, _T_1)
-                                If (LEqual (_T_1, 0x03))
+                                Store (\_PR.CLVL, T_1)
+                                If (LEqual (T_1, 0x03))
                                 {
                                     Store (One, \_PR.CBMI)
                                 }
                                 Else
                                 {
-                                    If (LEqual (_T_1, 0x02))
+                                    If (LEqual (T_1, 0x02))
                                     {
                                         Store (Zero, \_PR.CBMI)
                                     }
                                     Else
                                     {
-                                        If (LEqual (_T_1, One))
+                                        If (LEqual (T_1, One))
                                         {
                                             Store (Zero, \_PR.CBMI)
                                         }
@@ -843,24 +844,24 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, 0x02))
+                            If (LEqual (T_0, 0x02))
                             {
                                 While (One)
                                 {
-                                    Store (\_PR.CLVL, _T_2)
-                                    If (LEqual (_T_2, 0x03))
+                                    Store (\_PR.CLVL, T_2)
+                                    If (LEqual (T_2, 0x03))
                                     {
                                         Store (0x02, \_PR.CBMI)
                                     }
                                     Else
                                     {
-                                        If (LEqual (_T_2, 0x02))
+                                        If (LEqual (T_2, 0x02))
                                         {
                                             Store (One, \_PR.CBMI)
                                         }
                                         Else
                                         {
-                                            If (LEqual (_T_2, One))
+                                            If (LEqual (T_2, One))
                                             {
                                                 Store (Zero, \_PR.CBMI)
                                             }
@@ -878,8 +879,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
                 While (One)
                 {
-                    Store (ToInteger (\_PR.CBMI), _T_3)
-                    If (LEqual (_T_3, Zero))
+                    Store (ToInteger (\_PR.CBMI), T_3)
+                    If (LEqual (T_3, Zero))
                     {
                         If (LAnd (LGreaterEqual (\_PR.CLVL, One), LLessEqual (\_PR.CLVL, 0x03)))
                         {
@@ -889,7 +890,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                     }
                     Else
                     {
-                        If (LEqual (_T_3, One))
+                        If (LEqual (T_3, One))
                         {
                             If (LOr (LEqual (\_PR.CLVL, 0x02), LEqual (\_PR.CLVL, 0x03)))
                             {
@@ -899,7 +900,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_3, 0x02))
+                            If (LEqual (T_3, 0x02))
                             {
                                 If (LEqual (\_PR.CLVL, 0x03))
                                 {
@@ -915,32 +916,32 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
                 While (One)
                 {
-                    Store (Local0, _T_4)
-                    If (LEqual (_T_4, Zero))
+                    Store (Local0, T_4)
+                    If (LEqual (T_4, Zero))
                     {
                         Store (Zero, \_SB.PCI0.B0D4.MAXT)
                         Notify (\_SB.PCI0.B0D4, 0x84)
                     }
                     Else
                     {
-                        If (LEqual (_T_4, One))
+                        If (LEqual (T_4, One))
                         {
                             While (One)
                             {
-                                Store (\_PR.CLVL, _T_5)
-                                If (LEqual (_T_5, 0x03))
+                                Store (\_PR.CLVL, T_5)
+                                If (LEqual (T_5, 0x03))
                                 {
                                     Store (One, \_SB.PCI0.B0D4.MAXT)
                                 }
                                 Else
                                 {
-                                    If (LEqual (_T_5, 0x02))
+                                    If (LEqual (T_5, 0x02))
                                     {
                                         Store (Zero, \_SB.PCI0.B0D4.MAXT)
                                     }
                                     Else
                                     {
-                                        If (LEqual (_T_5, One))
+                                        If (LEqual (T_5, One))
                                         {
                                             Store (Zero, \_SB.PCI0.B0D4.MAXT)
                                         }
@@ -954,24 +955,24 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_4, 0x02))
+                            If (LEqual (T_4, 0x02))
                             {
                                 While (One)
                                 {
-                                    Store (\_PR.CLVL, _T_6)
-                                    If (LEqual (_T_6, 0x03))
+                                    Store (\_PR.CLVL, T_6)
+                                    If (LEqual (T_6, 0x03))
                                     {
                                         Store (0x02, \_SB.PCI0.B0D4.MAXT)
                                     }
                                     Else
                                     {
-                                        If (LEqual (_T_6, 0x02))
+                                        If (LEqual (T_6, 0x02))
                                         {
                                             Store (One, \_SB.PCI0.B0D4.MAXT)
                                         }
                                         Else
                                         {
-                                            If (LEqual (_T_6, One))
+                                            If (LEqual (T_6, One))
                                             {
                                                 Store (Zero, \_SB.PCI0.B0D4.MAXT)
                                             }
@@ -1167,7 +1168,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
         Name (_PPC, Zero)  // _PPC: Performance Present Capabilites
         Method (SPPC, 1, Serialized)
         {
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             Store (Arg0, \_PR.CPU0._PPC)
             If (CondRefOf (\_SB.PCCD.PENB))
             {
@@ -1177,8 +1178,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
             {
                 While (One)
                 {
-                    Store (ToInteger (TCNT), _T_0)
-                    If (LEqual (_T_0, 0x08))
+                    Store (ToInteger (TCNT), T_0)
+                    If (LEqual (T_0, 0x08))
                     {
                         Notify (\_PR.CPU0, 0x80)
                         Notify (\_PR.CPU1, 0x80)
@@ -1191,7 +1192,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, 0x04))
+                        If (LEqual (T_0, 0x04))
                         {
                             Notify (\_PR.CPU0, 0x80)
                             Notify (\_PR.CPU1, 0x80)
@@ -1200,7 +1201,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, 0x02))
+                            If (LEqual (T_0, 0x02))
                             {
                                 Notify (\_PR.CPU0, 0x80)
                                 Notify (\_PR.CPU1, 0x80)
@@ -1263,47 +1264,47 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
         })
         Method (PCCC, 0, Serialized)
         {
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             Store (One, Index (PCCX, Zero))
             While (One)
             {
-                Store (ToInteger (CPNU (PTDP, Zero)), _T_0)
-                If (LEqual (_T_0, 0x39))
+                Store (ToInteger (CPNU (PTDP, Zero)), T_0)
+                If (LEqual (T_0, 0x39))
                 {
                     Store (0xA7F8, Index (DerefOf (Index (PCCX, One)), Zero))
                     Store (0x00017318, Index (DerefOf (Index (PCCX, One)), One))
                 }
                 Else
                 {
-                    If (LEqual (_T_0, 0x2F))
+                    If (LEqual (T_0, 0x2F))
                     {
                         Store (0x9858, Index (DerefOf (Index (PCCX, One)), Zero))
                         Store (0x00014C08, Index (DerefOf (Index (PCCX, One)), One))
                     }
                     Else
                     {
-                        If (LEqual (_T_0, 0x25))
+                        If (LEqual (T_0, 0x25))
                         {
                             Store (0x7148, Index (DerefOf (Index (PCCX, One)), Zero))
                             Store (0xD6D8, Index (DerefOf (Index (PCCX, One)), One))
                         }
                         Else
                         {
-                            If (LEqual (_T_0, 0x19))
+                            If (LEqual (T_0, 0x19))
                             {
                                 Store (0x3E80, Index (DerefOf (Index (PCCX, One)), Zero))
                                 Store (0x7D00, Index (DerefOf (Index (PCCX, One)), One))
                             }
                             Else
                             {
-                                If (LEqual (_T_0, 0x0F))
+                                If (LEqual (T_0, 0x0F))
                                 {
                                     Store (0x36B0, Index (DerefOf (Index (PCCX, One)), Zero))
                                     Store (0x7D00, Index (DerefOf (Index (PCCX, One)), One))
                                 }
                                 Else
                                 {
-                                    If (LEqual (_T_0, 0x0B))
+                                    If (LEqual (T_0, 0x0B))
                                     {
                                         Store (0x36B0, Index (DerefOf (Index (PCCX, One)), Zero))
                                         Store (0x61A8, Index (DerefOf (Index (PCCX, One)), One))
@@ -1779,7 +1780,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
     {
         Method (TDPL, 0, Serialized)
         {
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             Name (AAAA, Zero)
             Name (BBBB, Zero)
             Name (CCCC, Zero)
@@ -1998,8 +1999,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
             {
                 While (One)
                 {
-                    Store (ToInteger (\_PR.CBMI), _T_0)
-                    If (LEqual (_T_0, Zero))
+                    Store (ToInteger (\_PR.CBMI), T_0)
+                    If (LEqual (T_0, Zero))
                     {
                         Store (Add (\_PR.TAR0, One), Local1)
                         Multiply (Local1, 0x64, Local2)
@@ -2014,7 +2015,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, One))
+                        If (LEqual (T_0, One))
                         {
                             Store (Add (\_PR.TAR1, One), Local1)
                             Multiply (Local1, 0x64, Local2)
@@ -2029,7 +2030,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, 0x02))
+                            If (LEqual (T_0, 0x02))
                             {
                                 Store (Add (\_PR.TAR2, One), Local1)
                                 Multiply (Local1, 0x64, Local2)
@@ -2065,8 +2066,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
         Name (LEV2, Zero)
         Method (STDP, 1, Serialized)
         {
-            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_1, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             If (LGreaterEqual (Arg0, \_PR.CLVL))
             {
                 Return (Zero)
@@ -2074,20 +2075,20 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             While (One)
             {
-                Store (ToInteger (Arg0), _T_0)
-                If (LEqual (_T_0, Zero))
+                Store (ToInteger (Arg0), T_0)
+                If (LEqual (T_0, Zero))
                 {
                     Store (LEV0, Local0)
                 }
                 Else
                 {
-                    If (LEqual (_T_0, One))
+                    If (LEqual (T_0, One))
                     {
                         Store (LEV1, Local0)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, 0x02))
+                        If (LEqual (T_0, 0x02))
                         {
                             Store (LEV2, Local0)
                         }
@@ -2099,20 +2100,20 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             While (One)
             {
-                Store (ToInteger (Local0), _T_1)
-                If (LEqual (_T_1, Zero))
+                Store (ToInteger (Local0), T_1)
+                If (LEqual (T_1, Zero))
                 {
                     CPL0 ()
                 }
                 Else
                 {
-                    If (LEqual (_T_1, One))
+                    If (LEqual (T_1, One))
                     {
                         CPL1 ()
                     }
                     Else
                     {
-                        If (LEqual (_T_1, 0x02))
+                        If (LEqual (T_1, 0x02))
                         {
                             CPL2 ()
                         }
@@ -2147,23 +2148,23 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
         Method (_QB8, 0, Serialized)  // _Qxx: EC Query
         {
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             While (One)
             {
-                Store (\_PR.CLVL, _T_0)
-                If (LEqual (_T_0, 0x03))
+                Store (\_PR.CLVL, T_0)
+                If (LEqual (T_0, 0x03))
                 {
                     Store (One, \_SB.PCI0.B0D4.MAXT)
                 }
                 Else
                 {
-                    If (LEqual (_T_0, 0x02))
+                    If (LEqual (T_0, 0x02))
                     {
                         Store (Zero, \_SB.PCI0.B0D4.MAXT)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, One))
+                        If (LEqual (T_0, One))
                         {
                             Store (Zero, \_SB.PCI0.B0D4.MAXT)
                         }
@@ -2178,23 +2179,23 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
         Method (_QB9, 0, Serialized)  // _Qxx: EC Query
         {
-            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+            Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
             While (One)
             {
-                Store (\_PR.CLVL, _T_0)
-                If (LEqual (_T_0, 0x03))
+                Store (\_PR.CLVL, T_0)
+                If (LEqual (T_0, 0x03))
                 {
                     Store (0x02, \_SB.PCI0.B0D4.MAXT)
                 }
                 Else
                 {
-                    If (LEqual (_T_0, 0x02))
+                    If (LEqual (T_0, 0x02))
                     {
                         Store (One, \_SB.PCI0.B0D4.MAXT)
                     }
                     Else
                     {
-                        If (LEqual (_T_0, One))
+                        If (LEqual (T_0, One))
                         {
                             Store (Zero, \_SB.PCI0.B0D4.MAXT)
                         }
@@ -2253,7 +2254,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
             Name (_PPC, Zero)  // _PPC: Performance Present Capabilites
             Method (SPPC, 1, Serialized)
             {
-                Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
+                Name (T_0, Zero)  // _T_x: Emitted by ASL Compiler
                 Store (Arg0, \_PR.CPU0._PPC)
                 If (CondRefOf (\_SB.PCCD.PENB))
                 {
@@ -2263,8 +2264,8 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                 {
                     While (One)
                     {
-                        Store (ToInteger (TCNT), _T_0)
-                        If (LEqual (_T_0, 0x08))
+                        Store (ToInteger (TCNT), T_0)
+                        If (LEqual (T_0, 0x08))
                         {
                             Notify (\_PR.CPU0, 0x80)
                             Notify (\_PR.CPU1, 0x80)
@@ -2277,7 +2278,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                         }
                         Else
                         {
-                            If (LEqual (_T_0, 0x04))
+                            If (LEqual (T_0, 0x04))
                             {
                                 Notify (\_PR.CPU0, 0x80)
                                 Notify (\_PR.CPU1, 0x80)
@@ -2286,7 +2287,7 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
                             }
                             Else
                             {
-                                If (LEqual (_T_0, 0x02))
+                                If (LEqual (T_0, 0x02))
                                 {
                                     Notify (\_PR.CPU0, 0x80)
                                     Notify (\_PR.CPU1, 0x80)
@@ -2715,9 +2716,9 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             Method (_BCL, 0, NotSerialized)  // _BCL: Brightness Control Levels
             {
-                If (CondRefOf (\_SB.PCI0.GFX0.LCDD._BCL))
+                If (CondRefOf (\_SB.PCI0.IGPU.LCDD._BCL))
                 {
-                    Return (\_SB.PCI0.GFX0.LCDD._BCL ())
+                    Return (\_SB.PCI0.IGPU.LCDD._BCL ())
                 }
                 Else
                 {
@@ -2730,17 +2731,17 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             Method (_BCM, 1, NotSerialized)  // _BCM: Brightness Control Method
             {
-                If (CondRefOf (\_SB.PCI0.GFX0.LCDD._BCM))
+                If (CondRefOf (\_SB.PCI0.IGPU.LCDD._BCM))
                 {
-                    \_SB.PCI0.GFX0.LCDD._BCM (Arg0)
+                    \_SB.PCI0.IGPU.LCDD._BCM (Arg0)
                 }
             }
 
             Method (_BQC, 0, NotSerialized)  // _BQC: Brightness Query Current
             {
-                If (CondRefOf (\_SB.PCI0.GFX0.LCDD._BQC))
+                If (CondRefOf (\_SB.PCI0.IGPU.LCDD._BQC))
                 {
-                    Return (\_SB.PCI0.GFX0.LCDD._BQC ())
+                    Return (\_SB.PCI0.IGPU.LCDD._BQC ())
                 }
                 Else
                 {
@@ -2750,9 +2751,9 @@ DefinitionBlock ("SSDT-5.aml", "SSDT", 1, "DptfTa", "DptfTabl", 0x00001000)
 
             Method (_DCS, 0, NotSerialized)  // _DCS: Display Current Status
             {
-                If (CondRefOf (\_SB.PCI0.GFX0.LCDD._DCS))
+                If (CondRefOf (\_SB.PCI0.IGPU.LCDD._DCS))
                 {
-                    Return (\_SB.PCI0.GFX0.LCDD._DCS ())
+                    Return (\_SB.PCI0.IGPU.LCDD._DCS ())
                 }
                 Else
                 {
